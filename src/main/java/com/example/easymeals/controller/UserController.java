@@ -27,7 +27,7 @@ public class UserController {
         if(!userRepository.existsById(id)) {
             // TODO add exceptions types
         }
-        return ResponseEntity.ok(userRepository.getById(id));
+        return ResponseEntity.ok(userRepository.findById(id).get());
     }
 
     @DeleteMapping("/{id}")
