@@ -44,9 +44,4 @@ public class UserController {
         return ResponseEntity.noContent().build(); // <- when we want to return response without content
     }
 
-    @GetMapping("/test")
-    public List<Recipe> getRecipes() {
-        return provider.loadData();
-    }
-
 }
