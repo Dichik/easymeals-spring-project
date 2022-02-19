@@ -1,11 +1,15 @@
 package com.example.easymeals.controller;
 
+import com.example.easymeals.dataprovider.SpoonacularDataProvider;
+import com.example.easymeals.entity.Recipe;
 import com.example.easymeals.entity.User;
 import com.example.easymeals.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -15,6 +19,7 @@ import java.util.List;
 public class UserController {
 
     private final UserRepository userRepository;
+    private final SpoonacularDataProvider provider;
 
     @GetMapping
     public List<User> getAll() {
@@ -37,6 +42,11 @@ public class UserController {
         }
         userRepository.deleteById(id);
         return ResponseEntity.noContent().build(); // <- when we want to return response without content
+    }
+
+    @GetMapping("/test")
+    public List<Recipe> getRecipes() {
+        return provider.loadData();
     }
 
 }
