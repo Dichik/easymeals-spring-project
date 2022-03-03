@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,8 +44,8 @@ public class UserController {
     @PutMapping("/{id:[\\d]+}")
     public ResponseEntity<UserDto> update(
             @PathVariable Long id,
-            @RequestBody UserDto userDto) {
-        return userService.findUserById(id)
+            @Valid @RequestBody UserDto userDto) {
+        return userService.update(id, userDto)
                 .map(user -> ResponseEntity.ok(modelMapper.map(user, UserDto.class)))
                 .orElseThrow(() -> new InvalidIdentifierException(id));
     }
