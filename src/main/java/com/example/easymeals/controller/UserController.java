@@ -1,15 +1,11 @@
 package com.example.easymeals.controller;
 
 import com.example.easymeals.dataprovider.SpoonacularDataProvider;
-import com.example.easymeals.entity.Recipe;
 import com.example.easymeals.entity.User;
 import com.example.easymeals.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import reactor.core.publisher.Mono;
 
 import java.util.List;
 

@@ -1,7 +1,6 @@
 package com.example.easymeals.dataprovider;
 
 import com.example.easymeals.entity.Recipe;
-import com.example.easymeals.entity.RecipeDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONArray;
