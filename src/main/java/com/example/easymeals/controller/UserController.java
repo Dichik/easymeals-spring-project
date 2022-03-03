@@ -1,9 +1,8 @@
 package com.example.easymeals.controller;
 
-import com.example.easymeals.dataprovider.SpoonacularDataProvider;
 import com.example.easymeals.dataprovider.dto.UserDto;
 import com.example.easymeals.entity.User;
-import com.example.easymeals.repository.UserRepository;
+import com.example.easymeals.exception.InvalidIdentifierException;
 import com.example.easymeals.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -29,15 +28,31 @@ public class UserController {
     }
 
     // TODO regular pattern for id
-    @GetMapping("/{id}")
-    public ResponseEntity<User> getUser(@PathVariable Long id) {
-        return null;
+    @GetMapping("/{id:[\\d]+}")
+    public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
+        return userService.findUserById(id)
+                .map(user -> ResponseEntity.ok(modelMapper.map(user, UserDto.class)))
+                .orElseThrow(() -> new InvalidIdentifierException(id));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<User> delete(@PathVariable Long id) {
+    @PostMapping
+    public UserDto create(@RequestBody UserDto userDto) {
+        return modelMapper.map(userService.save(userDto), UserDto.class);
+    }
 
-        return ResponseEntity.noContent().build(); // <- when we want to return response without content
+    @PutMapping("/{id:[\\d]+}")
+    public ResponseEntity<UserDto> update(
+            @PathVariable Long id,
+            @RequestBody UserDto userDto) {
+        return userService.findUserById(id)
+                .map(user -> ResponseEntity.ok(modelMapper.map(user, UserDto.class)))
+                .orElseThrow(() -> new InvalidIdentifierException(id));
+    }
+
+    @DeleteMapping("/{id:[\\d]+}")
+    public ResponseEntity<UserDto> delete(@PathVariable Long id) {
+        userService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
 }
