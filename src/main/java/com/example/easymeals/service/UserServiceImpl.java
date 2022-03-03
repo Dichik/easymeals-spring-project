@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
     private final ModelMapper modelMapper;
 
     @Override
-    public List<User> findAll() {
+    public List<User> getAll() {
         return userRepository.findAll();
     }
 
