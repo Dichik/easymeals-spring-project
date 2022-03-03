@@ -1,0 +1,5 @@
+-- insert into users(id, username, first_name, second_name, email, password, phone)
+-- values (1, 'dichik', 'Kiril', 'O', 's', 'sdfkdfkj', '0976776076');
+--
+-- insert into users(id, username, first_name, second_name, email, password, phone)
+-- values (2, 'dichik', 'Kiril', 'O', 's', 'sdfkdfkj', '0976776076');

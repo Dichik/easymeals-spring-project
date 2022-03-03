@@ -1,42 +1,59 @@
 package com.example.easymeals.controller;
 
+import com.example.easymeals.dataprovider.dto.UserDto;
 import com.example.easymeals.entity.User;
-import com.example.easymeals.repository.UserRepository;
+import com.example.easymeals.exception.InvalidIdentifierException;
+import com.example.easymeals.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")
 public class UserController {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
+    private final ModelMapper modelMapper;
 
     @GetMapping
-    public List<User> getAll() {
-        return userRepository.findAll();
+    public List<UserDto> getAll() {
+        return userService.findAll().stream()
+                .map(user -> modelMapper.map(user, UserDto.class))
+                .collect(Collectors.toList());
     }
 
     // TODO regular pattern for id
-    @GetMapping("/{id}")
-    public ResponseEntity<User> getUser(@PathVariable Long id) {
-        if(!userRepository.existsById(id)) {
-            // TODO add exceptions types
-        }
-        return ResponseEntity.ok(userRepository.getById(id));
+    @GetMapping("/{id:[\\d]+}")
+    public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
+        return userService.findUserById(id)
+                .map(user -> ResponseEntity.ok(modelMapper.map(user, UserDto.class)))
+                .orElseThrow(() -> new InvalidIdentifierException(id));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<User> delete(@PathVariable Long id) {
-        if(!userRepository.existsById(id)) {
-            // TODO throw exception
-        }
-        userRepository.deleteById(id);
-        return ResponseEntity.noContent().build(); // <- when we want to return response without content
+    @PostMapping
+    public UserDto create(@RequestBody UserDto userDto) {
+        return modelMapper.map(userService.save(userDto), UserDto.class);
+    }
+
+    @PutMapping("/{id:[\\d]+}")
+    public ResponseEntity<UserDto> update(
+            @PathVariable Long id,
+            @Valid @RequestBody UserDto userDto) {
+        return userService.update(id, userDto)
+                .map(user -> ResponseEntity.ok(modelMapper.map(user, UserDto.class)))
+                .orElseThrow(() -> new InvalidIdentifierException(id));
+    }
+
+    @DeleteMapping("/{id:[\\d]+}")
+    public ResponseEntity<UserDto> delete(@PathVariable Long id) {
+        userService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
 }
