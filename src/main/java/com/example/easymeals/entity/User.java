@@ -3,14 +3,13 @@ package com.example.easymeals.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Getter
 @Setter
-@Table(name = "users")
-public class User implements Serializable {
+@Table(name = "user")
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

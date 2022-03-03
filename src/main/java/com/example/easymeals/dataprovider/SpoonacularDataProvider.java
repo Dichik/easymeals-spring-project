@@ -13,9 +13,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -24,6 +22,7 @@ public class SpoonacularDataProvider implements DataProvider {
 
     @Override
     public Stream<Recipe> loadData() {
+        // TODO get these fields from applications.properties
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://api.spoonacular.com/recipes/complexSearch?apiKey=fa62df8d2bd1463d93ce67caff6959c7"))
                 .header("content-type", "application/json")
@@ -37,6 +36,7 @@ public class SpoonacularDataProvider implements DataProvider {
             e.printStackTrace();
         }
         JSONObject jsonObject = new JSONObject(Objects.requireNonNull(response).body());
+        // TODO move to final variable
         JSONArray array = jsonObject.getJSONArray("results");
         return IntStream.range(0, array.length()).mapToObj(i -> {
             try {

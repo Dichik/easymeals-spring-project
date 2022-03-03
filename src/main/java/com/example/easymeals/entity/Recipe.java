@@ -5,15 +5,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "recipe")
 public class Recipe {
     @Id
     @Column(name = "id", nullable = false)
@@ -22,4 +21,5 @@ public class Recipe {
     private String title;
     private String image;
     private String imageType;
+
 }
