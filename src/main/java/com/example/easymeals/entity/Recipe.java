@@ -16,6 +16,7 @@ public class Recipe {
     private Long id;
 // TODO finish Recipe configuration
     private String title;
-    private Double rating;
+    private Double score = 0.0;
+    private Long numberOfVotes = 0L;
 
 }

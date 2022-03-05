@@ -67,12 +67,12 @@ public class RecipeServiceImpl implements RecipeService {
         int skip = (int) data.get("skip");
 
         List<Recipe> recipes = getAll();
-        recipes.sort((o1, o2) -> {
-            if(o1.getRating() < o2.getRating()) {
-                return 1;
-            }
-            return -1;
-        });
+//        recipes.sort((o1, o2) -> {
+//            if(o1.getRating() < o2.getRating()) {
+//                return 1;
+//            }
+//            return -1;
+//        });
         return recipes;
     }
 }

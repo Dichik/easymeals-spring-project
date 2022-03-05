@@ -28,6 +28,7 @@ public class RecipeController {
             return recipeService.getAll().stream()
                     .map(recipe -> modelMapper.map(recipe, RecipeDto.class))
                     .collect(Collectors.toList());
+            // data = new LinkedHashMap<>();
         }
         return recipeService.getAllFiltered(data).stream()
                 .map(recipe -> modelMapper.map(recipe, RecipeDto.class))
@@ -43,6 +44,7 @@ public class RecipeController {
 
     @PostMapping
     public RecipeDto create(@Valid @RequestBody RecipeDto recipeDto) {
+
         return modelMapper.map(recipeService.save(recipeDto), RecipeDto.class);
     }
 

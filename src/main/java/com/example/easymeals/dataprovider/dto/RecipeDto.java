@@ -15,6 +15,10 @@ public class RecipeDto {
     @Parsed(field = "title")
     private String title;
 
-    @Parsed(field = "rating")
-    private Double rating;
+    @Parsed(field = "score")
+    private Double score;
+
+    @Parsed(field = "numberOfVotes")
+    private Long numberOfVotes;
+
 }

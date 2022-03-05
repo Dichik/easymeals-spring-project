@@ -15,12 +15,11 @@ import javax.persistence.Table;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "user_ratings")
-@IdClass(UserRatingsId.class)
-public class UserRatings {
-    @Id
-    private Long userId;
+@Table(name = "ratings")
+@IdClass(RatingsId.class)
+public class Ratings {
 
-    @Id
-    private Long recipeId;
+    @Id private Long userId;
+    @Id private Long recipeId;
+
 }
