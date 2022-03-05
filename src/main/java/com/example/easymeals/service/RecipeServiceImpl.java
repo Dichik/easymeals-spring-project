@@ -5,12 +5,18 @@ import com.example.easymeals.entity.Recipe;
 import com.example.easymeals.repository.RecipeRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.modelmapper.ModelMapper;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
+import static java.lang.Boolean.parseBoolean;
 
 @Slf4j
 @Service
@@ -33,7 +39,7 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public Recipe save(RecipeDto recipeDto) {
         Recipe recipe = modelMapper.map(recipeDto, Recipe.class);
-        return recipe;
+        return recipeRepository.save(recipe);
     }
 
     @Override
@@ -52,5 +58,30 @@ public class RecipeServiceImpl implements RecipeService {
         } catch (EmptyResultDataAccessException e) {
             log.info(e.getMessage(), e);
         }
+    }
+
+    @Override
+    public List<Recipe> getAllFiltered(final LinkedHashMap data) {
+        List<LinkedHashMap> result = ((List<LinkedHashMap>) data.get("ingredients"));
+        List<String> answer = result.stream()
+                .map(map -> map.get("name").toString())
+                .collect(Collectors.toList());
+        int returnObjects = (int) data.get("return_objects");
+        int skip = (int) data.get("skip");
+
+        LinkedHashMap<?, ?> filterData = (LinkedHashMap<?, ?>) data.get("filter_data");
+        boolean needToSort = parseBoolean(filterData.get("sort").toString());
+
+        List<Recipe> recipes = getAll();
+        if(needToSort) {
+            boolean ascending = parseBoolean(filterData.get("ascending").toString());
+            recipes.sort((o1, o2) -> {
+                if(o1.getRating() < o2.getRating()) {
+                    return 1;
+                }
+                return -1;
+            });
+        }
+        return recipes;
     }
 }

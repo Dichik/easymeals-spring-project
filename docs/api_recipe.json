@@ -1,0 +1,16 @@
+{
+  "ingredients": [
+    {"name": "tomato"},
+    {"name": "cucumber"}
+  ],
+  "filter_data": {
+    "sort": "true",
+    "ascending": "true",
+    "sort_by": {
+      "available_ingredients": "true",
+      "rating": "true"
+    }
+  },
+  "return_objects": 100,
+  "skip": 0
+}

@@ -6,13 +6,14 @@ import com.example.easymeals.service.RecipeService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("/recipe")
 public class RecipeController {
@@ -21,8 +22,8 @@ public class RecipeController {
     private final ModelMapper modelMapper;
 
     @GetMapping
-    public List<RecipeDto> getAll() {
-        return recipeService.getAll().stream()
+    public List<RecipeDto> getRecipes(@RequestBody LinkedHashMap data) {
+        return recipeService.getAllFiltered(data).stream()
                 .map(recipe -> modelMapper.map(recipe, RecipeDto.class))
                 .collect(Collectors.toList());
     }
@@ -35,7 +36,7 @@ public class RecipeController {
     }
 
     @PostMapping
-    public RecipeDto create(RecipeDto recipeDto) {
+    public RecipeDto create(@Valid @RequestBody RecipeDto recipeDto) {
         return modelMapper.map(recipeService.save(recipeDto), RecipeDto.class);
     }
 

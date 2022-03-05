@@ -3,6 +3,8 @@ package com.example.easymeals.service;
 import com.example.easymeals.dataprovider.dto.RecipeDto;
 import com.example.easymeals.entity.Recipe;
 
+import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,5 +19,7 @@ public interface RecipeService {
     Optional<Recipe> update(Long id, RecipeDto recipeDto);
 
     void deleteById(Long id);
+
+    List<Recipe> getAllFiltered(LinkedHashMap data);
 
 }
