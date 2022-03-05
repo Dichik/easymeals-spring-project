@@ -19,6 +19,8 @@ import java.util.stream.Stream;
 @Service
 public class SpoonacularDataProvider implements DataProvider {
 
+//    TODO add WebClient to get all that things
+
     @Override
     public Stream<Recipe> loadData() {
         // TODO get these fields from applications.properties

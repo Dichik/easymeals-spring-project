@@ -5,18 +5,14 @@ import com.example.easymeals.entity.Recipe;
 import com.example.easymeals.repository.RecipeRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import lombok.val;
 import org.modelmapper.ModelMapper;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
-import static java.lang.Boolean.parseBoolean;
 
 @Slf4j
 @Service

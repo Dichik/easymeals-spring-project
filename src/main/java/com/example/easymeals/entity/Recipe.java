@@ -14,7 +14,7 @@ public class Recipe {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
+// TODO finish Recipe configuration
     private String title;
     private Double rating;
 
