@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RestController
@@ -22,7 +23,12 @@ public class RecipeController {
     private final ModelMapper modelMapper;
 
     @GetMapping
-    public List<RecipeDto> getRecipes(@RequestBody LinkedHashMap data) {
+    public List<RecipeDto> getRecipes(@RequestBody(required = false) LinkedHashMap data) {
+        if(Objects.equals(data, null)) {
+            return recipeService.getAll().stream()
+                    .map(recipe -> modelMapper.map(recipe, RecipeDto.class))
+                    .collect(Collectors.toList());
+        }
         return recipeService.getAllFiltered(data).stream()
                 .map(recipe -> modelMapper.map(recipe, RecipeDto.class))
                 .collect(Collectors.toList());

@@ -7,15 +7,16 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "recipe")
-public class Recipe {
+@Table(name = "rating")
+public class Rating {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String title;
+    @OneToOne(targetEntity = Recipe.class)
+    private Long recipeId;
     private Double rating;
-
 }

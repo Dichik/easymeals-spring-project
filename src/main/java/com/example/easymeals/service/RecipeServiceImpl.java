@@ -62,6 +62,7 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public List<Recipe> getAllFiltered(final LinkedHashMap data) {
+//        TODO add checking if fields exists and throw exception if not
         List<LinkedHashMap> result = ((List<LinkedHashMap>) data.get("ingredients"));
         List<String> answer = result.stream()
                 .map(map -> map.get("name").toString())
