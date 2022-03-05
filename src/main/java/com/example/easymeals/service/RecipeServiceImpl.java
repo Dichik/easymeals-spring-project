@@ -69,19 +69,13 @@ public class RecipeServiceImpl implements RecipeService {
         int returnObjects = (int) data.get("return_objects");
         int skip = (int) data.get("skip");
 
-        LinkedHashMap<?, ?> filterData = (LinkedHashMap<?, ?>) data.get("filter_data");
-        boolean needToSort = parseBoolean(filterData.get("sort").toString());
-
         List<Recipe> recipes = getAll();
-        if(needToSort) {
-            boolean ascending = parseBoolean(filterData.get("ascending").toString());
-            recipes.sort((o1, o2) -> {
-                if(o1.getRating() < o2.getRating()) {
-                    return 1;
-                }
-                return -1;
-            });
-        }
+        recipes.sort((o1, o2) -> {
+            if(o1.getRating() < o2.getRating()) {
+                return 1;
+            }
+            return -1;
+        });
         return recipes;
     }
 }
