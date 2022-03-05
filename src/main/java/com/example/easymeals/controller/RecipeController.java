@@ -22,7 +22,8 @@ public class RecipeController {
     private final ModelMapper modelMapper;
 
     @GetMapping
-    public List<RecipeDto> getRecipes(@RequestBody LinkedHashMap data) {
+    public List<RecipeDto> getRecipes(@RequestBody(required = false) LinkedHashMap data) {
+//        TODO add an ability to get recipes without body
         return recipeService.getAllFiltered(data).stream()
                 .map(recipe -> modelMapper.map(recipe, RecipeDto.class))
                 .collect(Collectors.toList());
