@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 @RequestMapping("/admin")
 public class AdminController {
 
+    // TODO check, there should be bugs !!!
+
     private final AdminService adminService;
     private final ModelMapper modelMapper;
 
