@@ -25,6 +25,8 @@ public class RatingController {
     private final RecipeRepository recipeRepository;
     private final ModelMapper modelMapper;
 
+//    TODO move to service all that things
+
     @PostMapping
     public ResponseEntity<RatingsDto> rateRecipe(@Valid @RequestBody RatingsDto ratingsDto) {
         /* If we haven't already marked this recipe, we just create new one */
@@ -44,7 +46,7 @@ public class RatingController {
 
         @NotNull Double previousMark = ratings.get().getScore();
         recipeRepository.revote(previousMark, ratingsDto.getScore(), ratingsDto.getRecipeId());
-
+        ratingsRepository.save(modelMapper.map(ratingsDto, Ratings.class));
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
