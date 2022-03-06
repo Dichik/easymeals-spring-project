@@ -58,6 +58,7 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public List<Recipe> getAllFiltered(final LinkedHashMap data) {
+//        TODO add checking if fields exists and throw exception if not
         List<LinkedHashMap> result = ((List<LinkedHashMap>) data.get("ingredients"));
         List<String> answer = result.stream()
                 .map(map -> map.get("name").toString())
@@ -66,12 +67,12 @@ public class RecipeServiceImpl implements RecipeService {
         int skip = (int) data.get("skip");
 
         List<Recipe> recipes = getAll();
-        recipes.sort((o1, o2) -> {
-            if(o1.getRating() < o2.getRating()) {
-                return 1;
-            }
-            return -1;
-        });
+//        recipes.sort((o1, o2) -> {
+//            if(o1.getRating() < o2.getRating()) {
+//                return 1;
+//            }
+//            return -1;
+//        });
         return recipes;
     }
 }

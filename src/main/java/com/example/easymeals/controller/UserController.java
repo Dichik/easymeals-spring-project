@@ -1,7 +1,6 @@
 package com.example.easymeals.controller;
 
 import com.example.easymeals.dataprovider.dto.UserDto;
-import com.example.easymeals.entity.User;
 import com.example.easymeals.exception.InvalidIdentifierException;
 import com.example.easymeals.service.UserService;
 import lombok.RequiredArgsConstructor;

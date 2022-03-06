@@ -6,13 +6,14 @@ import com.example.easymeals.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+    import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/admin")
 public class AdminController {
+
+    // TODO check, there should be bugs !!!
 
     private final AdminService adminService;
     private final ModelMapper modelMapper;

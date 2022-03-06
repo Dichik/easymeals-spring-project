@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RestController
@@ -23,7 +24,12 @@ public class RecipeController {
 
     @GetMapping
     public List<RecipeDto> getRecipes(@RequestBody(required = false) LinkedHashMap data) {
-//        TODO add an ability to get recipes without body
+        if(Objects.equals(data, null)) {
+            return recipeService.getAll().stream()
+                    .map(recipe -> modelMapper.map(recipe, RecipeDto.class))
+                    .collect(Collectors.toList());
+            // data = new LinkedHashMap<>();
+        }
         return recipeService.getAllFiltered(data).stream()
                 .map(recipe -> modelMapper.map(recipe, RecipeDto.class))
                 .collect(Collectors.toList());
@@ -38,6 +44,7 @@ public class RecipeController {
 
     @PostMapping
     public RecipeDto create(@Valid @RequestBody RecipeDto recipeDto) {
+
         return modelMapper.map(recipeService.save(recipeDto), RecipeDto.class);
     }
 
