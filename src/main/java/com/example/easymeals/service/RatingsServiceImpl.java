@@ -2,6 +2,7 @@ package com.example.easymeals.service;
 
 import com.example.easymeals.dataprovider.dto.RatingsDto;
 import com.example.easymeals.entity.Ratings;
+import com.example.easymeals.entity.RatingsId;
 import com.example.easymeals.repository.RatingsRepository;
 import com.example.easymeals.repository.RecipeRepository;
 import lombok.RequiredArgsConstructor;
@@ -45,6 +46,20 @@ public class RatingsServiceImpl implements RatingsService {
         );
 
         @NotNull Double previousMark = ratings.get().getScore();
+
+        /*
+        * If we have @previousMark == new value of score
+        * we just remove info about voting from this user
+        *
+        * UPD: like in YouTube
+        * */
+        if(previousMark.equals(ratingsDto.getScore())) {
+            ratingsRepository.deleteById(
+                    new RatingsId(ratingsDto.getUserId(), ratingsDto.getRecipeId()));
+            recipeRepository.removeVote(previousMark, ratingsDto.getRecipeId());
+            return Ratings.builder().build();
+        }
+
         recipeRepository.revote(previousMark, ratingsDto.getScore(), ratingsDto.getRecipeId());
         return ratingsRepository.save(modelMapper.map(ratingsDto, Ratings.class));
     }

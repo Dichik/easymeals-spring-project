@@ -20,4 +20,8 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
             nativeQuery = true)
     void revote(Double oldScore, Double newScore, Long recipeId);
 
+    @Modifying @Transactional
+    @Query(value = "UPDATE recipe SET score=( (score * number_of_votes - ?1) / (number_of_votes - 1) ), number_of_votes=number_of_votes-1 WHERE id=?2",
+            nativeQuery = true)
+    void removeVote(Double previousMark, Long recipeId);
 }
