@@ -22,4 +22,6 @@ public class Ratings {
     @Id private Long userId;
     @Id private Long recipeId;
 
+    private Double score;
+
 }
