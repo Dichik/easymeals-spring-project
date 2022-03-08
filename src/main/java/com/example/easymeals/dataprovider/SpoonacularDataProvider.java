@@ -1,11 +1,15 @@
 package com.example.easymeals.dataprovider;
 
+import com.example.easymeals.clients.SpoonacularClient;
+import com.example.easymeals.dataprovider.dto.RecipeDto;
 import com.example.easymeals.entity.Recipe;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.io.IOException;
 import java.net.URI;
@@ -17,12 +21,20 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 @Service
+@RequiredArgsConstructor
 public class SpoonacularDataProvider implements DataProvider {
 
 //    TODO add WebClient to get all that things
 
+    private final WebClient webClient;
+    private final SpoonacularClient client;
+
     @Override
-    public Stream<Recipe> loadData() {
+    public Stream<RecipeDto> loadData() {
+
+        webClient.get();
+        client.loadData();
+
         // TODO get these fields from applications.properties
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://api.spoonacular.com/recipes/complexSearch?apiKey=fa62df8d2bd1463d93ce67caff6959c7"))
@@ -41,7 +53,7 @@ public class SpoonacularDataProvider implements DataProvider {
         JSONArray array = jsonObject.getJSONArray("results");
         return IntStream.range(0, array.length()).mapToObj(i -> {
             try {
-                return new ObjectMapper().readValue(array.get(i).toString(), Recipe.class);
+                return new ObjectMapper().readValue(array.get(i).toString(), RecipeDto.class);
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }

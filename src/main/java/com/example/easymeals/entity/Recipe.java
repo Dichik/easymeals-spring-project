@@ -16,6 +16,12 @@ public class Recipe {
     private Long id;
 // TODO finish Recipe configuration
     private String title;
+
+    private String calories;
+    private String image;
+
+    private String readyInMinutes;
+
     private Double score = 0.0;
     private Long numberOfVotes = 0L;
 

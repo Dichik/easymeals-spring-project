@@ -1,5 +1,6 @@
 package com.example.easymeals.controller;
 
+import com.example.easymeals.dataprovider.SpoonacularDataProvider;
 import com.example.easymeals.dataprovider.dto.RecipeDto;
 import com.example.easymeals.exception.InvalidIdentifierException;
 import com.example.easymeals.service.RecipeService;
@@ -7,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import javax.validation.Valid;
 import java.util.LinkedHashMap;
@@ -21,6 +23,13 @@ public class RecipeController {
 
     private final RecipeService recipeService;
     private final ModelMapper modelMapper;
+
+    private final SpoonacularDataProvider dataProvider;
+
+    @GetMapping("/test")
+    public void test() {
+        dataProvider.loadData();
+    }
 
     @GetMapping
     public List<RecipeDto> getRecipes(@RequestBody(required = false) LinkedHashMap data) {
