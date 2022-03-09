@@ -10,15 +10,18 @@ import javax.validation.constraints.NotBlank;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "ingredient")
+@Table(name = "ingredients")
 public class Ingredient {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @NotBlank(message = "Name is mandatory")
     private String name;
+
+    @NotBlank(message = "Recipe id is mandatory")
+    private Long recipeId;
 
     private Double amount;
     private String consitency;
