@@ -1,5 +1,6 @@
 package com.example.easymeals.service;
 
+import com.example.easymeals.dataprovider.dto.IngredientDto;
 import com.example.easymeals.dataprovider.dto.RecipeDto;
 import com.example.easymeals.entity.Recipe;
 
@@ -21,4 +22,5 @@ public interface RecipeService {
 
     List<Recipe> getAllFiltered(LinkedHashMap data);
 
+    List<IngredientDto> getIngredientsFromData(LinkedHashMap data);
 }

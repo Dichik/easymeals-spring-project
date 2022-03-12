@@ -1,5 +1,6 @@
 package com.example.easymeals.service;
 
+import com.example.easymeals.dataprovider.dto.IngredientDto;
 import com.example.easymeals.dataprovider.dto.RecipeDto;
 import com.example.easymeals.entity.Recipe;
 import com.example.easymeals.repository.RecipeRepository;
@@ -67,12 +68,20 @@ public class RecipeServiceImpl implements RecipeService {
         int skip = (int) data.get("skip");
 
         List<Recipe> recipes = getAll();
-//        recipes.sort((o1, o2) -> {
-//            if(o1.getRating() < o2.getRating()) {
-//                return 1;
-//            }
-//            return -1;
-//        });
+        recipes.sort((o1, o2) -> {
+            if(o1.getScore() < o2.getScore()) {
+                return 1;
+            }
+            return -1;
+        });
         return recipes;
+    }
+
+    @Override
+    public List<IngredientDto> getIngredientsFromData(LinkedHashMap data) {
+        List<LinkedHashMap> result = ((List<LinkedHashMap>) data.get("ingredients"));
+        return result.stream()
+                .map(object -> modelMapper.map(object, IngredientDto.class))
+                .collect(Collectors.toList());
     }
 }
