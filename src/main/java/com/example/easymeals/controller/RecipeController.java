@@ -1,8 +1,11 @@
 package com.example.easymeals.controller;
 
 import com.example.easymeals.dataprovider.SpoonacularDataProvider;
+import com.example.easymeals.dataprovider.dto.IngredientDto;
 import com.example.easymeals.dataprovider.dto.RecipeDto;
+import com.example.easymeals.entity.Ingredient;
 import com.example.easymeals.exception.InvalidIdentifierException;
+import com.example.easymeals.service.IngredientService;
 import com.example.easymeals.service.RecipeService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -14,6 +17,7 @@ import javax.validation.Valid;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
@@ -23,6 +27,7 @@ public class RecipeController {
 
     private final RecipeService recipeService;
     private final ModelMapper modelMapper;
+    private final IngredientService ingredientService;
 
     private final SpoonacularDataProvider dataProvider;
 
@@ -32,16 +37,28 @@ public class RecipeController {
     }
 
     @GetMapping
-    public List<RecipeDto> getRecipes(@RequestBody(required = false) LinkedHashMap data) {
-        if(Objects.equals(data, null)) {
-            return recipeService.getAll().stream()
-                    .map(recipe -> modelMapper.map(recipe, RecipeDto.class))
-                    .collect(Collectors.toList());
-            // data = new LinkedHashMap<>();
-        }
+    public List<RecipeDto> getRecipes(@RequestBody LinkedHashMap data) {
+
+        Set<String> ingredientsInBasketNames = recipeService.getIngredientsFromData(data)
+                .stream().map(IngredientDto::getName)
+                .collect(Collectors.toSet());
+
         return recipeService.getAllFiltered(data).stream()
-                .map(recipe -> modelMapper.map(recipe, RecipeDto.class))
-                .collect(Collectors.toList());
+                .map(recipe -> {
+                    RecipeDto recipeDto = modelMapper.map(recipe, RecipeDto.class);
+
+                    List<IngredientDto> ingredientsByRecipeId = ingredientService
+                            .getIngredientsByRecipeId(recipe.getId())
+                            .stream().map(ingredient -> {
+                                IngredientDto ingredientDto = modelMapper.map(ingredient, IngredientDto.class);
+                                Boolean itemInBasket = ingredientsInBasketNames.contains(ingredientDto.getName());
+                                ingredientDto.setItemInBasket(itemInBasket);
+                                return ingredientDto;
+                            }).collect(Collectors.toList());
+
+                    recipeDto.setIngredientList(ingredientsByRecipeId);
+                    return recipeDto;
+                }).collect(Collectors.toList());
     }
 
     @GetMapping("/{id:[\\d]+}")

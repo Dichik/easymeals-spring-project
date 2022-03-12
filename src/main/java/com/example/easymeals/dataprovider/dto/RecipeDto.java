@@ -1,10 +1,13 @@
 package com.example.easymeals.dataprovider.dto;
 
+import com.example.easymeals.entity.Ingredient;
 import com.univocity.parsers.annotations.Parsed;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @Builder
@@ -20,5 +23,7 @@ public class RecipeDto {
 
     @Parsed(field = "numberOfVotes")
     private Long numberOfVotes;
+
+    private List<IngredientDto> ingredientList;
 
 }

@@ -24,7 +24,7 @@ public class Ingredient {
     private Long recipeId;
 
     private Double amount;
-    private String consitency;
+    private String consistency;
     private String units;
 
 }
