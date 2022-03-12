@@ -3,7 +3,6 @@ package com.example.easymeals.controller;
 import com.example.easymeals.dataprovider.SpoonacularDataProvider;
 import com.example.easymeals.dataprovider.dto.IngredientDto;
 import com.example.easymeals.dataprovider.dto.RecipeDto;
-import com.example.easymeals.entity.Ingredient;
 import com.example.easymeals.exception.InvalidIdentifierException;
 import com.example.easymeals.service.IngredientService;
 import com.example.easymeals.service.RecipeService;
@@ -11,12 +10,10 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.reactive.function.client.WebClient;
 
 import javax.validation.Valid;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -70,7 +67,6 @@ public class RecipeController {
 
     @PostMapping
     public RecipeDto create(@Valid @RequestBody RecipeDto recipeDto) {
-
         return modelMapper.map(recipeService.save(recipeDto), RecipeDto.class);
     }
 
