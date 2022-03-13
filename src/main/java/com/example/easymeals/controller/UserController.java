@@ -27,7 +27,6 @@ public class UserController {
                 .collect(Collectors.toList());
     }
 
-    // TODO regular pattern for id
     @GetMapping("/{id:[\\d]+}")
     public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
         return userService.findUserById(id)

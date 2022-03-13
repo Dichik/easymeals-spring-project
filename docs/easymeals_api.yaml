@@ -1,0 +1,246 @@
+swagger: "2.0"
+info:
+  description: "This is a sample EasyMeals server."
+  version: "1.0.0"
+  title: "Swagger EasyMeals"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "omeluan.dima@gmail.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "localhost:8080"
+basePath: "/api/v1"
+schemes:
+  - "http"
+paths:
+  /users:
+    get:
+      tags:
+        - "users"
+      summary: "Find all users"
+      description: "Returns list of all users"
+      operationId: ""
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/User"
+    post:
+      tags:
+        - "users"
+      summary: "Create a user"
+      description: ""
+      operationId: ""
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "body"
+          in: "body"
+          description: "User object that needs to be added to the database"
+          required: true
+          schema:
+            $ref: "#/definitions/User"
+      responses:
+        "201":
+          description: "successful operation"
+
+  /user/{username}:
+    get:
+      tags:
+        - "users"
+      summary: "Find user by id"
+      description: "Returns a single pet"
+      operationId: ""
+      produces:
+        - "application/json"
+      parameters:
+        - name: "username"
+          in: "path"
+          description: "id of user to return"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/User"
+    put:
+      tags:
+        - "users"
+      summary: "Update user info by id"
+      description: ""
+      operationId: ""
+      produces:
+        - "application/json"
+      parameters:
+        - name: "username"
+          in: "path"
+          description: "id of user to update"
+          required: true
+          type: "string"
+        - name: "body"
+          in: "body"
+          description: "Updated user object"
+          required: true
+          schema:
+            $ref: "#/definitions/User"
+      responses:
+        "400":
+          description: "Invalid user applied"
+        "401":
+          description: "User not found"
+    delete:
+      tags:
+        - "users"
+      summary: "Delete user by id"
+      description: "It can only be done by logged in user"
+      operationId: ""
+      produces:
+        - "application/json"
+      parameters:
+        - name: "username"
+          in: "path"
+          description: "The name that needs to be deleted"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "deleted successfully"
+        "400":
+          description: "Invalid user applied"
+        "401":
+          description: "User not found"
+# TODO write a correct operationIds
+  /recipes:
+    post:
+      tags:
+        - recipes
+      summary: ""
+      description: ""
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "List of recipes was returned successfully."
+
+  /recipes/{recipeId}:
+    get:
+      tags:
+        - "recipes"
+      summary: "Find recipe by id"
+      description: "Returns a single recipe"
+      operationId: "getRecipeById"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "recipeId"
+          in: "path"
+          description: "id of recipe to return"
+          required: true
+          type: "integer"
+          format: "int64"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Recipe"
+    delete:
+      tags:
+        - "recipes"
+      summary: "Delete recipe by id"
+      description: "Delete a single recipe"
+      operationId: "deleteRecipeById"
+      parameters:
+        - name: "recipeId"
+          in: "path"
+          description: "id of recipe to delete"
+          required: true
+          type: "integer"
+          format: "int64"
+      responses:
+        "400":
+          description: "Invalid ID supplied"
+        "401":
+          description: "Recipe not found"
+
+definitions:
+  Recipe:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      title:
+        type: "string"
+      score:
+        type: "number"
+        format: "double"
+      numberOfVotes:
+        type: "integer"
+      ingredientList:
+        type: "array"
+        items:
+          $ref: "#/definitions/Ingredient"
+
+  User:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      username:
+        type: "string"
+      firstName:
+        type: "string"
+      secondName:
+        type: "string"
+      email:
+        type: "string"
+      password:
+        type: "string"
+      phone:
+        type: "string"
+
+  Admin:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      username:
+        type: "string"
+      firstName:
+        type: "string"
+      secondName:
+        type: "string"
+      email:
+        type: "string"
+      password:
+        type: "string"
+      phone:
+        type: "string"
+
+  Ingredient:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      amountId:
+        type: "number"
+        format: "double"
+      consistency:
+        type: "string"
+      units:
+        type: "string"
+      itemInBasket:
+        type: "boolean"

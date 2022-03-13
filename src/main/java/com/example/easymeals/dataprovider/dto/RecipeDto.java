@@ -1,6 +1,5 @@
 package com.example.easymeals.dataprovider.dto;
 
-import com.example.easymeals.entity.Ingredient;
 import com.univocity.parsers.annotations.Parsed;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +13,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RecipeDto {
-//    TODO think about correct fields
+    @Parsed(field = "id")
+    private Long id;
+
     @Parsed(field = "title")
     private String title;
 

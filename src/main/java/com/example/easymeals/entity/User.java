@@ -16,10 +16,7 @@ import javax.validation.constraints.Pattern;
 @NoArgsConstructor
 @Table(name = "users")
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    @Id @Column(unique = true)
     @NotBlank(message = "Username is mandatory")
     private String username;
     private String firstName;

@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AdminDto {
 
+    private Long id;
     private String username;
     private String firstName;
     private String secondName;
