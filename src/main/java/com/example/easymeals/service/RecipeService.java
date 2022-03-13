@@ -10,6 +10,8 @@ import java.util.Optional;
 
 public interface RecipeService {
 
+    List<Recipe> getAll(List<Long> ids);
+
     List<Recipe> getAll();
 
     Optional<Recipe> findById(Long id);

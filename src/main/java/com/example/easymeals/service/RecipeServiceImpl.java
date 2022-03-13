@@ -24,6 +24,11 @@ public class RecipeServiceImpl implements RecipeService {
     private final ModelMapper modelMapper;
 
     @Override
+    public List<Recipe> getAll(List<Long> ids) {
+        return recipeRepository.findAllById(ids);
+    }
+
+    @Override
     public List<Recipe> getAll() {
         return recipeRepository.findAll();
     }

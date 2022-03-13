@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/rating")
+@RequestMapping("/api/v1/rating")
 public class RatingController {
 
     private final RatingsService ratingsService;
