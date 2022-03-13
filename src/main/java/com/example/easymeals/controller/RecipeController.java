@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/recipe")
+@RequestMapping("/api/v1/recipe")
 public class RecipeController {
 
     private final RecipeService recipeService;
