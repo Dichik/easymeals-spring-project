@@ -8,13 +8,10 @@ import com.example.easymeals.service.RecipeService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -38,6 +35,13 @@ public class HistoryController {
 
     @DeleteMapping
     public ResponseEntity<RecipeDto> clear() {
+        historyService.clear();
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{id:[\\d]+}")
+    public ResponseEntity<RecipeDto> removeById(@Valid @PathVariable Long id) {
+        historyService.removeFromHistory(id);
         return ResponseEntity.noContent().build();
     }
 
